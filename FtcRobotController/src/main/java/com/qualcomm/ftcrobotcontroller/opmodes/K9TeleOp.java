@@ -54,19 +54,21 @@ public class K9TeleOp extends OpMode {
 	 * Also, as the claw servo approaches 0, the claw opens up (drops the game element).
 	 */
 	// TETRIX VALUES.
-	final static double ARM_MIN_RANGE  = 0.25;
+	final static double ARM_MIN_RANGE  = 0.0;
 	final static double ARM_MAX_RANGE  = 1.0;
 	final static double CLAW_MIN_RANGE  = 0.0;
 	final static double CLAW_MAX_RANGE  = 1.0;
 
+	final static double CODE_VERSION  = 0.2;
+
 	// position of the arm servo.
-	double armPosition = 1.0;
+	double armPosition = 0.0;
 
 	// amount to change the arm servo position.
-	double armDelta = 0.002;
+	double armDelta = 0.004;
 
 	// position of the claw servo
-	double clawPosition;
+	double clawPosition = 0.0;
 
 	// amount to change the claw servo position by
 	double clawDelta = 0.004;
@@ -75,9 +77,6 @@ public class K9TeleOp extends OpMode {
 	DcMotor motorRightB;
 	DcMotor motorLeftF;
 	DcMotor motorLeftB;
-	DcMotor middlemotor;
-
-
 
 	Servo claw;
 	Servo arm;
@@ -217,7 +216,10 @@ public class K9TeleOp extends OpMode {
 			telemetry.addData("Gamepad1 left y", gamepad1.left_stick_y);
 			telemetry.addData("Gamepad1 left x", gamepad1.right_stick_x);
 			telemetry.addData("Gamepad1 left y", gamepad1.right_stick_y);
-			//telemetry.addData("Gamepad1 )
+			//telemetry.addData("servo1" )
+			telemetry.addData("servo1", armPosition);
+			telemetry.addData("code version", CODE_VERSION);
+
 
 			motorRightF.setPower(right);
 			motorRightB.setPower(-right);
@@ -255,7 +257,7 @@ public class K9TeleOp extends OpMode {
 				telemetry.addData("Gamepad1 right bumper", gamepad1.right_bumper);
 			}
 			else{
-				middlemotor.setPower(0);
+				//middlemotor.setPower(0);
 			}
 
 		}catch(Exception e) {
