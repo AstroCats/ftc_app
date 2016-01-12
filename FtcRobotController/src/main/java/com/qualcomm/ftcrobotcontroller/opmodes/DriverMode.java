@@ -61,7 +61,7 @@ public class DriverMode extends OpMode {
 	final static double SCISSOR_LIFT_MAX_RANGE  = 1.0;
 	final static double SCISSOR_LIFT_MIN_RANGE  = 0.0;
 
-	final static double CODE_VERSION  = 0.42;
+	final static double CODE_VERSION  = 1.04;
 
 	// position of the arm servo.
 	double armPosition = 0.0;
@@ -161,15 +161,24 @@ public class DriverMode extends OpMode {
 		}
 
 		float stringMotorPower = gamepad2.right_stick_y;
+		if (stringMotorPower < 0.0)
+		{
+			stringMotorPower = (float)-1.0*(stringMotorPower*stringMotorPower);
+		}
+		else{
+			stringMotorPower = stringMotorPower*stringMotorPower;
+		}
+
 
 		try {
 			telemetry.addData("Gamepad1 leftTread x", gamepad1.left_stick_x);
 			telemetry.addData("Gamepad1 leftTread y", gamepad1.left_stick_y);
-			telemetry.addData("Gamepad1 leftTread x", gamepad1.right_stick_x);
-			telemetry.addData("Gamepad1 leftTread y", gamepad1.right_stick_y);
+			telemetry.addData("Gamepad1 rightTread x", gamepad1.right_stick_x);
+			telemetry.addData("Gamepad1 rightTread y", gamepad1.right_stick_y);
 			telemetry.addData("servo1", armPosition);
 			telemetry.addData("Gamepad2 scissorLift y", gamepad2.left_stick_y);
-			telemetry.addData("Gamepad2 stringMotor y", gamepad2.right_stick_y);
+			telemetry.addData("raw stringmotor - right stick y", gamepad2.right_stick_y);
+			telemetry.addData("   stringMotorPower", stringMotorPower);
 
 			stringMotor.setPower(stringMotorPower);
 
