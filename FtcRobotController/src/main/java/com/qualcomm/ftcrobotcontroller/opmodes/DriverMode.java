@@ -34,6 +34,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.IrSeekerSensor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -61,7 +62,7 @@ public class DriverMode extends OpMode {
 	final static double SCISSOR_LIFT_MAX_RANGE  = 1.0;
 	final static double SCISSOR_LIFT_MIN_RANGE  = 0.0;
 
-	final static double CODE_VERSION  = 0.42;
+	final static double CODE_VERSION  = 3.1415962;
 
 	// position of the arm servo.
 	double armPosition = 0.0;
@@ -119,6 +120,12 @@ public class DriverMode extends OpMode {
 			arm = hardwareMap.servo.get("arm");
 			claw = hardwareMap.servo.get("claw");
 
+			// TODO: Make sure the motors directions are correct
+			motorRightF.setDirection(DcMotor.Direction.FORWARD);
+			motorRightB.setDirection(DcMotor.Direction.FORWARD);
+			motorLeftF.setDirection(DcMotor.Direction.FORWARD);
+			motorLeftB.setDirection(DcMotor.Direction.FORWARD);
+
             telemetry.addData("GLaDOS: DriverMode.Init() (takeover complete without errors).", "");
         }catch(Exception e){
             telemetry.addData("GLaDOS: DriverMode.Init() Error: ",e.getMessage());
@@ -165,17 +172,17 @@ public class DriverMode extends OpMode {
 		try {
 			telemetry.addData("Gamepad1 leftTread x", gamepad1.left_stick_x);
 			telemetry.addData("Gamepad1 leftTread y", gamepad1.left_stick_y);
-			telemetry.addData("Gamepad1 leftTread x", gamepad1.right_stick_x);
-			telemetry.addData("Gamepad1 leftTread y", gamepad1.right_stick_y);
+			telemetry.addData("Gamepad1 rightTread x", gamepad1.right_stick_x);
+			telemetry.addData("Gamepad1 rightTread y", gamepad1.right_stick_y);
 			telemetry.addData("servo1", armPosition);
 			telemetry.addData("Gamepad2 scissorLift y", gamepad2.left_stick_y);
 			telemetry.addData("Gamepad2 stringMotor y", gamepad2.right_stick_y);
 
 			stringMotor.setPower(stringMotorPower);
 
-			motorRightF.setPower(rightTread);
+			motorRightF.setPower(-rightTread);
 			motorRightB.setPower(-rightTread);
-			motorLeftF.setPower(-leftTread);
+			motorLeftF.setPower(leftTread);
 			motorLeftB.setPower(leftTread);
 			if (gamepad2.a) {
 				// if the A button is pushed on gamepad1, increment the position of

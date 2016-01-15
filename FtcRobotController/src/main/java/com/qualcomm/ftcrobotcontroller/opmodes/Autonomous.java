@@ -39,9 +39,6 @@ public class Autonomous extends OpMode {
             motorLeftF.setDirection(DcMotor.Direction.FORWARD);
             motorLeftB.setDirection(DcMotor.Direction.FORWARD);
 
-            // TODO: Check to make sure the "reset encoders" command works on
-            // motors that don't have encoders (only two of the motors on Robot 1
-            // have encoders
             motorRightF.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
             motorRightB.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
             motorLeftF.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
